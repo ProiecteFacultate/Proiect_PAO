@@ -2,22 +2,30 @@ package proiect.models;
 
 public class Plane extends AerialVehicle{
 
-    private Integer numberOfWings;
-    private boolean hasJetEngines;
+    private Integer maxAltitude;
 
-    public Plane(Integer capacity, Integer maxSpeed, Integer consumption, Integer numberOfEngines, boolean fliesHighAltitude, Integer numberOfWings, boolean hasJetEngines) {
-        super(capacity, maxSpeed, consumption, numberOfEngines, fliesHighAltitude);
-        this.numberOfWings = numberOfWings;
-        this.hasJetEngines = hasJetEngines;
+    public Plane(){}
+
+    public Plane(Integer capacity, Integer price, Integer maxAltitude) {
+        super(capacity, price);
+        this.maxAltitude = maxAltitude;
+    }
+
+    public Integer isMaxAltitude() {
+        return maxAltitude;
+    }
+
+    public void setMaxAltitude(Integer maxAltitude) {
+        this.maxAltitude = maxAltitude;
     }
 
     @Override
-    void presentConsumption() {
-        System.out.println("This plane consumes " + consumption + " liters of diesel per hour");
-    }
-
-    @Override
-    void drive() {
-        System.out.println("Flying like a bird");
+    public String toString() {
+        return "Plane{" +
+                "maxAltitude=" + maxAltitude +
+                ", capacity=" + capacity +
+                ", numberOfReservedSeats=" + numberOfReservedSeats +
+                ", price=" + price +
+                '}';
     }
 }

@@ -2,21 +2,41 @@ package proiect.models;
 
 public abstract class Vehicle {
 
-    protected Integer capacity;   //number of people
-    protected Integer maxSpeed;
-    protected Integer consumption;
+    protected Integer capacity;   //number of seats
+    protected Integer numberOfReservedSeats = 0;
+    protected Integer price;     //per seat
 
-    public Vehicle(Integer capacity, Integer maxSpeed, Integer consumption) {
+    public Vehicle() {}
+    public Vehicle(Integer capacity, Integer price) {
         this.capacity = capacity;
-        this.maxSpeed = maxSpeed;
-        this.consumption = consumption;
+        this.price = price;
     }
 
     void resize(Integer newCapacity) {
         capacity = newCapacity;
     }
 
-    abstract void presentConsumption();
+    public Integer getCapacity() {
+        return capacity;
+    }
 
-    abstract void drive();
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Integer getNumberOfReservedSeats() {
+        return numberOfReservedSeats;
+    }
+
+    public void setNumberOfReservedSeats(Integer numberOfReservedSeats) {
+        this.numberOfReservedSeats = numberOfReservedSeats;
+    }
 }

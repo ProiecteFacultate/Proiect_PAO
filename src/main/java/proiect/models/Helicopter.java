@@ -1,23 +1,32 @@
 package proiect.models;
 
+import proiect.enums.HelicopterEnum;
+
 public class Helicopter extends AerialVehicle{
 
-    private boolean hasDoublePropeller;
-    private boolean hasWheels;
+    private HelicopterEnum helicopterType;
 
-    public Helicopter(Integer capacity, Integer maxSpeed, Integer consumption, Integer numberOfEngines, boolean fliesHighAltitude, boolean hasDoublePropeller, boolean hasWheels) {
-        super(capacity, maxSpeed, consumption, numberOfEngines, fliesHighAltitude);
-        this.hasDoublePropeller = hasDoublePropeller;
-        this.hasWheels = hasWheels;
+    public Helicopter(){}
+    public Helicopter(Integer capacity, Integer price, HelicopterEnum helicopterType) {
+        super(capacity, price);
+        this.helicopterType = helicopterType;
+    }
+
+    public HelicopterEnum getHelicopterType() {
+        return helicopterType;
+    }
+
+    public void setHelicopterType(HelicopterEnum helicopterType) {
+        this.helicopterType = helicopterType;
     }
 
     @Override
-    void presentConsumption() {
-        System.out.println("This helicopter consumes " + consumption + " liters of diesel per hour");
-    }
-
-    @Override
-    void drive() {
-        System.out.println("Going straight in the air");
+    public String toString() {
+        return "Helicopter{" +
+                "helicopterType=" + helicopterType +
+                ", capacity=" + capacity +
+                ", numberOfReservedSeats=" + numberOfReservedSeats +
+                ", price=" + price +
+                '}';
     }
 }

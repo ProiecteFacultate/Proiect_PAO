@@ -2,13 +2,20 @@ package proiect.models;
 
 public abstract class NavalVehicle extends Vehicle {
 
-    protected Integer numberOfEngines;
+    protected Integer numberOfRooms;
 
-    public NavalVehicle(Integer capacity, Integer maxSpeed, Integer consumption, Integer numberOfEngines, boolean gotSails) {
-        super(capacity, maxSpeed, consumption);
-        this.numberOfEngines = numberOfEngines;
-        this.gotSails = gotSails;
+    public NavalVehicle(){}
+
+    public NavalVehicle(Integer capacity, Integer price, Integer numberOfRooms) {
+        super(capacity, price);
+        this.numberOfRooms = numberOfRooms;
     }
 
-    protected boolean gotSails;
+    public Integer getNumberOfRooms() {
+        return numberOfRooms;
+    }
+
+    public void setNumberOfRooms(Integer numberOfRooms) {
+        this.numberOfRooms = numberOfRooms;
+    }
 }
