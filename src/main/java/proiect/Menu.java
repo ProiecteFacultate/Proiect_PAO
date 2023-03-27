@@ -79,7 +79,7 @@ public class Menu {
     }
 
     void addVehicle() throws IOException{
-        System.out.println("Introdu tipul de vehicul(BUS/TRAIN/PLANE/HELICOPTER/YACHT/SAILBOAT): ");
+        System.out.println("Introdu tipul de vehicul(BUS/TRAIN/PLANE/HELICOPTER): ");
         String command = reader.readLine();
         Vehicle vehicle = new VehicleFactory().getVehicle(command);
         if(vehicle == null)
@@ -145,7 +145,7 @@ public class Menu {
         Optional<Client> clientForReservation = clients.getClient(firstName, lastName);
 
         if(clientForReservation.isPresent()) {
-            System.out.println("Introdu tipul de vehicul (BUS/TRAIN/PLANE/HELICOPTER/YACHT/SAILBOAT):");
+            System.out.println("Introdu tipul de vehicul (BUS/TRAIN/PLANE/HELICOPTER):");
             String vehicleType = reader.readLine();
             System.out.println("Introdu numarul de bilete:");
             int seatsRequired = Integer.parseInt(reader.readLine());

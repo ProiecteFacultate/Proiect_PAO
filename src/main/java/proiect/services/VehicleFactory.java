@@ -27,10 +27,6 @@ public class VehicleFactory {
                 return createPlane();
             case "helicopter":
                 return createHelicopter();
-            case "yacht":
-                return createYacht();
-            case "sailboat":
-                return createSailBoat();
             default:
                 return null;
         }
@@ -88,28 +84,6 @@ public class VehicleFactory {
             newVehicle.setHelicopterType(HelicopterEnum.MEDIUM);
         else
             newVehicle.setHelicopterType(HelicopterEnum.BIG);
-
-        return newVehicle;
-    }
-
-    private Yacht createYacht() throws IOException{
-        Yacht newVehicle = new Yacht();
-        defaultRequests(newVehicle);
-
-        System.out.println("Introdu numarul de camere: ");
-        command = reader.readLine();
-        newVehicle.setNumberOfRooms(Integer.parseInt(command));
-
-        return newVehicle;
-    }
-
-    private SailBoat createSailBoat() throws IOException{
-        SailBoat newVehicle = new SailBoat();
-        defaultRequests(newVehicle);
-
-        System.out.println("Introdu numarul de camere: ");
-        command = reader.readLine();
-        newVehicle.setNumberOfRooms(Integer.parseInt(command));
 
         return newVehicle;
     }

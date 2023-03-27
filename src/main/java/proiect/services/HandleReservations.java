@@ -16,10 +16,6 @@ public class HandleReservations {
                 return reserve(company, new Plane(), seatsRequired);
             case "helicopter":
                 return reserve(company, new Helicopter(), seatsRequired);
-            case "yacht":
-                return reserve(company, new Yacht(), seatsRequired);
-            case "sailboat":
-                return reserve(company, new SailBoat(), seatsRequired);
             default:
                 return new HashMap<>();
         }
