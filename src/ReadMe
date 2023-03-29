@@ -1,0 +1,22 @@
+Interogari care pot fi facute de la consola:
+help
+adauga vehicul
+arata vehicule
+arata valoarea companiei
+arata castiguri urmatoare
+arata vehiculele complet inchiriate
+arata vehiculele libere
+rezerva locuri
+adauga client
+arata clienti
+arata un client
+
+Lista cu tipuri de obiecte:
+-Bus
+-Train
+-Plane
+-Helicopter
+-Client
+-Reservation
+-FuelEnum
+-HelicopterEnum
