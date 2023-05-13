@@ -1,9 +1,6 @@
 package proiect;
 
-import proiect.services.ClientsListingService;
-import proiect.services.ClientsListing;
-import proiect.services.CompanyService;
-import proiect.services.Company;
+import proiect.services.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,5 +29,6 @@ public class Main {
         }
 
         System.out.println("App ended");
+
     }
 }
