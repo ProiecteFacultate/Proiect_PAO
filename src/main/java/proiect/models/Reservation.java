@@ -1,34 +1,20 @@
 package proiect.models;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import proiect.models.abstracts.AbstractEntity;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
-public class Reservation {
-
-    private UUID id;
+@SuperBuilder
+@Getter
+public class Reservation extends AbstractEntity {
     private Integer totalPrice;
 
     public Reservation() {
         calculateTotalPrice();
     }
 
-    public Reservation(UUID id) {
-        this.id = id;
-        calculateTotalPrice();
-    }
-
-
     void calculateTotalPrice() {
         totalPrice = 0;
-    }
-
-    public Integer getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     @Override

@@ -1,26 +1,13 @@
 package proiect.models;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import proiect.models.abstracts.AbstractEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-
-public class Client {
-
-    private UUID id;
+@SuperBuilder
+@Getter
+public class Client extends AbstractEntity {
     private final String firstName;
     private final String lastName;
-
-    public Client(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public Client(UUID id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
 
     public void makeReservation(Reservation reservation) {
 
@@ -30,18 +17,6 @@ public class Client {
         int total = 0;
 
         return total;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     @Override

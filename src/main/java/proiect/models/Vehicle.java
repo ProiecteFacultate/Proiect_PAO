@@ -1,12 +1,12 @@
 package proiect.models;
-
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import proiect.enums.VehicleType;
+import proiect.models.abstracts.AbstractEntity;
 
-import java.util.UUID;
-
-public class Vehicle {
-
-    protected UUID id;
+@SuperBuilder
+@Getter
+public class Vehicle extends AbstractEntity {
     protected Integer capacity;   //number of seats
     protected Integer numberOfReservedSeats = 0;
     protected Integer price;     //per seat
@@ -16,20 +16,6 @@ public class Vehicle {
     public Vehicle(Integer capacity, Integer price) {
         this.capacity = capacity;
         this.price = price;
-    }
-
-    public Vehicle(UUID id, Integer capacity, Integer price) {
-        this.id = id;
-        this.capacity = capacity;
-        this.price = price;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public Integer getCapacity() {
