@@ -1,22 +1,26 @@
 package proiect.models;
 
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Reservation {
 
+    private UUID id;
     private Integer totalPrice;
-    private Map<Vehicle, Integer> vehicles;     //vehicle -> number of seats
 
-    public Reservation(Map<Vehicle, Integer> vehicles) {
-        this.vehicles = vehicles;
+    public Reservation() {
         calculateTotalPrice();
     }
 
+    public Reservation(UUID id) {
+        this.id = id;
+        calculateTotalPrice();
+    }
+
+
     void calculateTotalPrice() {
         totalPrice = 0;
-
-        for(Map.Entry<Vehicle, Integer> entry : vehicles.entrySet())
-            totalPrice += entry.getValue() * entry.getKey().getPrice();
     }
 
     public Integer getTotalPrice() {
@@ -25,14 +29,6 @@ public class Reservation {
 
     public void setTotalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public Map<Vehicle, Integer> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(Map<Vehicle, Integer> vehicles) {
-        this.vehicles = vehicles;
     }
 
     @Override

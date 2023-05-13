@@ -16,7 +16,7 @@ public class Main {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        menu.help();
+      /*  menu.help();
 
         while (true) {
             System.out.println("Introdu o comanda");
@@ -29,6 +29,6 @@ public class Main {
         }
 
         System.out.println("App ended");
-
+          */
     }
 }

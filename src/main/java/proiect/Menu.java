@@ -23,7 +23,7 @@ public class Menu {
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    void parseCommand(String command) throws IOException{
+   /* void parseCommand(String command) throws IOException{
         switch (command.toLowerCase()) {
             case "help":
                 help();
@@ -181,5 +181,5 @@ public class Menu {
             System.out.println(client.get());
         else
             System.out.println("Clientul dat nu exista");
-    }
+    } */
 }

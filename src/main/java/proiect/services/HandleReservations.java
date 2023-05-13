@@ -6,7 +6,7 @@ import java.util.*;
 
 public class HandleReservations {
 
-    public Map<Vehicle, Integer> makeReservation(CompanyService company, String vehicleType, int seatsRequired) {
+  /*  public Map<Vehicle, Integer> makeReservation(CompanyService company, String vehicleType, int seatsRequired) {
         switch (vehicleType.toLowerCase()) {
             case "bus":
                 return reserve(company, new Bus(), seatsRequired);
@@ -45,5 +45,5 @@ public class HandleReservations {
             }
 
         return reservedVehicles;
-    }
+    }   */
 }

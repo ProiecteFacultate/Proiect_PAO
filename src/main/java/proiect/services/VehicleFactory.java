@@ -1,11 +1,6 @@
 package proiect.services;
 
-import proiect.enums.FuelEnum;
-import proiect.enums.HelicopterEnum;
-import proiect.models.*;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class VehicleFactory {
@@ -17,7 +12,7 @@ public class VehicleFactory {
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public Vehicle getVehicle(String vehicleType) throws IOException{
+  /*  public Vehicle getVehicle(String vehicleType) throws IOException{
         switch (vehicleType.toLowerCase()) {
             case "bus":
                 return createBus();
@@ -95,5 +90,5 @@ public class VehicleFactory {
         System.out.println("Introdu pretul unui bilet: ");
         command = reader.readLine();
         newVehicle.setPrice(Integer.parseInt(command));
-    }
+    }   */
 }
