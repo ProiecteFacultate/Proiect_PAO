@@ -1,6 +1,7 @@
 package proiect.repository;
 
 import proiect.models.Client_Reservation;
+import proiect.models.Reservation;
 import proiect.models.Vehicle;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface Client_ReservationRepository {
     List<Client_Reservation> getAll();
 
     void addAllFromGivenList(List<Client_Reservation> clientReservationsList);
+
+    List<UUID> findAllReservationsByClient(UUID clientId);
 }

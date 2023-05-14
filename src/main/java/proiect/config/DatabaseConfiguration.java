@@ -8,7 +8,7 @@ public class DatabaseConfiguration {
 
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/proiect_pao";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "12345678";
     private static Connection databaseConnection;
 
     private DatabaseConfiguration() {

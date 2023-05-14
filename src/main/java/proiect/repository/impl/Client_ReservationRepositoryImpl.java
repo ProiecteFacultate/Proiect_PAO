@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,9 +24,9 @@ public class Client_ReservationRepositoryImpl implements Client_ReservationRepos
     public Optional<Client_Reservation> getObjectById(UUID id) {
         String selectSql = "SELECT * FROM Client_Reservation WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setObject(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             return clientReservationMapper.mapToClientReservation(resultSet);
@@ -40,9 +41,9 @@ public class Client_ReservationRepositoryImpl implements Client_ReservationRepos
     public void deleteObjectById(UUID id) {
         String updateClientReservationSql = "DELETE FROM Client_Reservation WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateClientReservationSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateClientReservationSql);
+            preparedStatement.setObject(1, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -57,10 +58,11 @@ public class Client_ReservationRepositoryImpl implements Client_ReservationRepos
                                             "reservation_id=?, \n" +
                                             "WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateClientReservationSql)) {
-            preparedStatement.setString(1, newObject.getClientId().toString());
-            preparedStatement.setString(2, newObject.getReservationId().toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateClientReservationSql);
+            preparedStatement.setObject(1, newObject.getClientId());
+            preparedStatement.setObject(2, newObject.getReservationId());
+            preparedStatement.setObject(3, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -72,11 +74,11 @@ public class Client_ReservationRepositoryImpl implements Client_ReservationRepos
     public void addNewObject(Client_Reservation clientReservation) {
         String insertSql = "INSERT INTO Client_Reservation (id, client_id, reservation_id) VALUES (?, ?, ?)";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
-            preparedStatement.setString(1, clientReservation.getId().toString());
-            preparedStatement.setString(2, clientReservation.getClientId().toString());
-            preparedStatement.setString(3, clientReservation.getReservationId().toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+            preparedStatement.setObject(1, clientReservation.getId());
+            preparedStatement.setObject(2, clientReservation.getClientId());
+            preparedStatement.setObject(3, clientReservation.getReservationId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -88,9 +90,8 @@ public class Client_ReservationRepositoryImpl implements Client_ReservationRepos
     public List<Client_Reservation> getAll() {
         String selectSql = "SELECT * FROM Client_Reservation";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
             ResultSet resultSet = preparedStatement.executeQuery();
             return clientReservationMapper.mapToClientReservationList(resultSet);
         } catch (SQLException e) {
@@ -103,5 +104,26 @@ public class Client_ReservationRepositoryImpl implements Client_ReservationRepos
     @Override
     public void addAllFromGivenList(List<Client_Reservation> clientReservationList) {
         clientReservationList.forEach(this::addNewObject);
+    }
+
+    @Override
+    public List<UUID> findAllReservationsByClient(UUID clientId) {
+        String selectSql = "SELECT * FROM Client_Reservation WHERE client_id=?";
+
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setObject(1, clientId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Client_Reservation> clientReservationList = clientReservationMapper.mapToClientReservationList(resultSet);
+            List<UUID> reservationsIds = new ArrayList<>();
+            for (Client_Reservation clientReservation : clientReservationList)
+                reservationsIds.add(clientReservation.getReservationId());
+            return reservationsIds;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return List.of();
     }
 }

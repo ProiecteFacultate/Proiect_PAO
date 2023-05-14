@@ -23,9 +23,9 @@ public class ClientRepositoryImpl implements ClientRepository {
     public Optional<Client> getObjectById(UUID id) {
         String selectSql = "SELECT * FROM Client WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setObject(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             return clientMapper.mapToClient(resultSet);
@@ -40,9 +40,9 @@ public class ClientRepositoryImpl implements ClientRepository {
     public void deleteObjectById(UUID id) {
         String updateClientSql = "DELETE FROM Client WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateClientSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateClientSql);
+            preparedStatement.setObject(1, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -57,10 +57,11 @@ public class ClientRepositoryImpl implements ClientRepository {
                                   "lastName=?, \n" +
                                   "WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateClientSql)) {
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateClientSql);
             preparedStatement.setString(1, newObject.getFirstName());
             preparedStatement.setString(2, newObject.getLastName());
+            preparedStatement.setObject(3, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -72,9 +73,9 @@ public class ClientRepositoryImpl implements ClientRepository {
     public void addNewObject(Client client) {
         String insertSql = "INSERT INTO Client (id, firstName, lastName) VALUES (?, ?, ?)";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
-            preparedStatement.setString(1, client.getId().toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+            preparedStatement.setObject(1, client.getId());
             preparedStatement.setString(2, client.getFirstName());
             preparedStatement.setString(3, client.getLastName());
 
@@ -88,9 +89,8 @@ public class ClientRepositoryImpl implements ClientRepository {
     public List<Client> getAll() {
         String selectSql = "SELECT * FROM Client";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
             ResultSet resultSet = preparedStatement.executeQuery();
             return clientMapper.mapToClientList(resultSet);
         } catch (SQLException e) {
@@ -103,5 +103,23 @@ public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public void addAllFromGivenList(List<Client> clientsList) {
         clientsList.forEach(this::addNewObject);
+    }
+
+    @Override
+    public Optional<Client> getByFirstNameAndLastName(String firstName, String lastName) {
+        String selectSql = "SELECT * FROM Client WHERE firstname=? AND lastname=?";
+
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return clientMapper.mapToClient(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
 }

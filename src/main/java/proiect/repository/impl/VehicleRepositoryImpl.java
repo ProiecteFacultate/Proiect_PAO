@@ -21,9 +21,9 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     public Optional<Vehicle> getObjectById(UUID id) {
         String selectSql = "SELECT * FROM Vehicle WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setObject(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             return vehicleMapper.mapToVehicle(resultSet);
@@ -38,9 +38,9 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     public void deleteObjectById(UUID id) {
         String updateVehicleSql = "DELETE FROM Vehicle WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateVehicleSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateVehicleSql);
+            preparedStatement.setObject(1, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -52,18 +52,18 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     public void updateObjectById(UUID id, Vehicle newObject) {
         String updateVehicleSql = "UPDATE Vehicle \n" +
                                   "SET capacity=?, \n" +
-                                  "numberOfReservedSeats=?, \n" +
+                                  "number_of_reserved_seats=?, \n" +
                                   "price=?, \n" +
                                   "vehicleType=?\n" +
                                   "WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateVehicleSql)) {
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateVehicleSql);
             preparedStatement.setInt(1, newObject.getCapacity());
             preparedStatement.setInt(2, newObject.getNumberOfReservedSeats());
             preparedStatement.setInt(3, newObject.getPrice());
             preparedStatement.setString(4, newObject.getVehicleType().toString());
-            preparedStatement.setString(5, id.toString());
+            preparedStatement.setObject(5, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -73,11 +73,11 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public void addNewObject(Vehicle vehicle) {
-        String insertSql = "INSERT INTO Vehicle (id, capacity, numberOfReservedSeats, price, vehicleType) VALUES (?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO Vehicle (id, capacity, number_of_reserved_seats, price, vehicleType) VALUES (?, ?, ?, ?, ?)";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
-            preparedStatement.setString(1, vehicle.getId().toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+            preparedStatement.setObject(1, vehicle.getId());
             preparedStatement.setInt(2, vehicle.getCapacity());
             preparedStatement.setInt(3, vehicle.getNumberOfReservedSeats());
             preparedStatement.setInt(4, vehicle.getPrice());
@@ -93,9 +93,8 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     public List<Vehicle> getAll() {
         String selectSql = "SELECT * FROM Vehicle";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
             ResultSet resultSet = preparedStatement.executeQuery();
             return vehicleMapper.mapToVehcileList(resultSet);
         } catch (SQLException e) {

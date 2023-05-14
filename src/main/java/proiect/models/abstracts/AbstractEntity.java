@@ -14,8 +14,5 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class AbstractEntity {
-    private UUID id;
-    private LocalDateTime creationDateTime;
-    private LocalDateTime updateDateTime;
-    private LocalDateTime deleteDateTime;
+    protected UUID id;
 }

@@ -1,5 +1,7 @@
 package proiect;
 
+import proiect.models.Client;
+import proiect.repository.impl.ClientRepositoryImpl;
 import proiect.services.*;
 
 import java.io.BufferedReader;
@@ -8,15 +10,13 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
 
-        CompanyService company = new Company();
-        ClientsListingService clients = new ClientsListing();
-        Menu menu = new Menu(company, clients);
+        Menu menu = new Menu();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-      /*  menu.help();
+        menu.help();
 
         while (true) {
             System.out.println("Introdu o comanda");
@@ -29,6 +29,5 @@ public class Main {
         }
 
         System.out.println("App ended");
-          */
     }
 }

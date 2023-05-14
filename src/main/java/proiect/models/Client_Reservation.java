@@ -9,4 +9,10 @@ import java.util.UUID;
 public class Client_Reservation extends AbstractEntity {
     private UUID clientId;
     private UUID reservationId;
+
+    public Client_Reservation(UUID clientId, UUID reservationId) {
+        this.id = UUID.randomUUID();
+        this.clientId = clientId;
+        this.reservationId = reservationId;
+    }
 }

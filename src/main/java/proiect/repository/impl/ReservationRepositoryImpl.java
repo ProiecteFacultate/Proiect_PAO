@@ -23,9 +23,9 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public Optional<Reservation> getObjectById(UUID id) {
         String selectSql = "SELECT * FROM Reservation WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setObject(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             return reservationMapper.mapToReservation(resultSet);
@@ -40,9 +40,9 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public void deleteObjectById(UUID id) {
         String updateReservationSql = "DELETE FROM Reservation WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateReservationSql)) {
-            preparedStatement.setString(1, id.toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateReservationSql);
+            preparedStatement.setObject(1, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -56,9 +56,10 @@ public class ReservationRepositoryImpl implements ReservationRepository {
                                       "SET totalPrice=?, \n" +
                                       "WHERE id=?";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateReservationSql)) {
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateReservationSql);
             preparedStatement.setInt(1, newObject.getTotalPrice());
+            preparedStatement.setObject(2, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -70,9 +71,9 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public void addNewObject(Reservation reservation) {
         String insertSql = "INSERT INTO Reservation (id, totalPrice) VALUES (?, ?)";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
-            preparedStatement.setString(1, reservation.getId().toString());
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+            preparedStatement.setObject(1, reservation.getId());
             preparedStatement.setInt(2, reservation.getTotalPrice());
 
             preparedStatement.executeUpdate();
@@ -85,9 +86,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public List<Reservation> getAll() {
         String selectSql = "SELECT * FROM Reservation";
 
-        Connection connection = DatabaseConfiguration.getDatabaseConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
-
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
             ResultSet resultSet = preparedStatement.executeQuery();
             return reservationMapper.mapToReservationList(resultSet);
         } catch (SQLException e) {

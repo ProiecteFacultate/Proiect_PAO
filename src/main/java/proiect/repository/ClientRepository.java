@@ -20,4 +20,6 @@ public interface ClientRepository {
     List<Client> getAll();
 
     void addAllFromGivenList(List<Client> clientsList);
+
+    Optional<Client> getByFirstNameAndLastName(String firstName, String lastName);
 }
