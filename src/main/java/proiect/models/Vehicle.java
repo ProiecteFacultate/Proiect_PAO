@@ -1,42 +1,38 @@
 package proiect.models;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import proiect.enums.VehicleType;
+import proiect.models.abstracts.AbstractEntity;
 
-public abstract class Vehicle {
+import java.util.UUID;
 
+@SuperBuilder
+@Getter
+@Setter
+public class Vehicle extends AbstractEntity {
     protected Integer capacity;   //number of seats
-    protected Integer numberOfReservedSeats = 0;
+    protected Integer numberOfReservedSeats;
     protected Integer price;     //per seat
+    protected VehicleType vehicleType;
 
     public Vehicle() {}
-    public Vehicle(Integer capacity, Integer price) {
+
+    public Vehicle(Integer capacity, Integer price, VehicleType vehicleType) {
+        this.id = UUID.randomUUID();
         this.capacity = capacity;
         this.price = price;
+        this.vehicleType = vehicleType;
+        numberOfReservedSeats = 0;
     }
 
-    void resize(Integer newCapacity) {
-        capacity = newCapacity;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getNumberOfReservedSeats() {
-        return numberOfReservedSeats;
-    }
-
-    public void setNumberOfReservedSeats(Integer numberOfReservedSeats) {
-        this.numberOfReservedSeats = numberOfReservedSeats;
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "capacity=" + capacity +
+                ", numberOfReservedSeats=" + numberOfReservedSeats +
+                ", price=" + price +
+                ", vehicleType=" + vehicleType +
+                '}';
     }
 }

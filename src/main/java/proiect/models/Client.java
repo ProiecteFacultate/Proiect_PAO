@@ -1,46 +1,42 @@
 package proiect.models;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import proiect.models.abstracts.AbstractEntity;
+import proiect.repository.Reservation_VehicleRepository;
+import proiect.repository.impl.*;
+import proiect.services.ClientService;
+import proiect.services.Client_ReservationService;
+import proiect.services.Reservation_VehicleService;
+import proiect.services.VehicleService;
+import proiect.services.impl.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class Client {
-
+@SuperBuilder
+@Getter
+public class Client extends AbstractEntity {
     private final String firstName;
     private final String lastName;
-    private List<Reservation> reservationList = new ArrayList<>();
 
     public Client(String firstName, String lastName) {
+        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public void makeReservation(Reservation reservation) {
-        reservationList.add(reservation);
-    }
-
     public int totalCost() {
+        Client_ReservationService clientReservationService = new Client_ReservationServiceImpl(new Client_ReservationRepositoryImpl());
+        ReservationServiceImpl reservationService = new ReservationServiceImpl(new ReservationRepositoryImpl());
+        List<UUID> reservations = clientReservationService.getAllReservationsByClient(id);
         int total = 0;
 
-        for(Reservation reservation : reservationList)
-            total += reservation.getTotalPrice();
+        for (UUID reservationId : reservations)
+            total += reservationService.getById(reservationId).get().getTotalPrice();
 
         return total;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public List<Reservation> getReservationList() {
-        return reservationList;
-    }
-
-    public void setReservationList(List<Reservation> reservationList) {
-        this.reservationList = reservationList;
     }
 
     @Override
@@ -48,7 +44,6 @@ public class Client {
         return "Client{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", reservationList=" + reservationList + '\'' +
                 ", totalCost=" + totalCost() +
                 '}';
     }
