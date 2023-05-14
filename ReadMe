@@ -15,3 +15,5 @@ Proiectul foloseste o baza de date Postgres care are 5 tabele: Vehicle, Client, 
 Un client poate face mai multe rezervari, iar pentru fiecare rezervare se pot folosi mai multe vehicule, cu conditia ca acestea sa fie de acelasi tip (BUS/PLANE/TRAIN/HELICOPTER).
 Repository-ule se acceseaza prin intermediul serviciilor.
 De fiecare data cand este introdusa o comanda din cele listate mai sus se va scrie in CsvFile.
+
+Pentru diagrama bazei de date -> Diagrama DB.png
